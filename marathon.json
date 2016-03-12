@@ -1,0 +1,49 @@
+{
+  "id": "prometheus-mesos-exporter",
+  "instances": 1,
+  "cpus": 0.2,
+  "mem": 256,
+  "container": {
+    "type": "DOCKER",
+    "docker": {
+      "portMappings": [
+        {
+          "containerPort": 9105,
+          "hostPort": 0,
+          "protocol": "tcp"
+        }
+      ],
+      "image": "wehkamp/prometheus-mesos-exporter:1.0",
+      "network": "BRIDGE",
+      "forcePullImage": true
+    }
+  },
+  "constraints": [
+    [
+      "rack",
+      "GROUP_BY"
+    ]
+  ],
+  "env": {
+      "SERVICE_9105_CHECK_HTTP": "/status",
+      "SERVICE_9105_TAGS": "exposes-metrics"
+  },
+  "labels": {
+    "team": "purple",
+    "type": "infrastructure"
+  },
+  "healthChecks": [
+    {
+      "protocol": "HTTP",
+      "path": "/",
+      "portIndex": 0,
+      "gracePeriodSeconds": 30,
+      "intervalSeconds": 60,
+      "timeoutSeconds": 10,
+      "maxConsecutiveFailures": 3
+    }
+  ],
+  "uris": [
+    "file:///etc/.dockercfg"
+  ]
+}
