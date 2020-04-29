@@ -1,4 +1,4 @@
-FROM wehkamp/alpine:3.11-5
+FROM wehkamp/alpine:3.11.5
 
 EXPOSE 9105
 ENTRYPOINT ["mesos_exporter"]
